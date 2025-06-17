@@ -1,0 +1,34 @@
+### Login correcto
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "correo_electronico": "juan@example.com",
+  "contrasena": "miClaveSegura123"
+}
+
+### Login incorrecto
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "correo_electronico": "juan@example.com",
+  "contrasena": "wrongpass"
+}
+
+### Registrar nuevo voluntario
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "Juan González",
+  "correo_electronico": "juan@example.com",
+  "contrasena": "miClaveSegura123",
+  "rol": "guia"
+}
+
+### Obtener todos los voluntarios
+GET http://localhost:3000/api/auth/volunteers
+
+### Eliminar voluntario (cambia el ID según corresponda)
+DELETE http://localhost:3000/api/auth/volunteers/2

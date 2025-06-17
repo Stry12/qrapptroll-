@@ -1,0 +1,18 @@
+########################
+# NODE / EXPRESS BACKEND
+########################
+/node_modules/
+/logs/
+/coverage/
+/dist/
+/.env         # variables secretas
+/.DS_Store
+/npm-debug.log*
+
+########################
+# GLOBAL
+########################
+*.log
+*.tmp
+.DS_Store
+Thumbs.db

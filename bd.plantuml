@@ -1,0 +1,87 @@
+@startuml
+' --- Configuraciones de Apariencia ---
+skinparam linetype ortho
+skinparam roundcorner 10
+skinparam shadowing true
+skinparam handwritten false
+skinparam classAttributeIconSize 0
+skinparam database {
+  borderColor #555555
+  backgroundColor #F2F2F2
+}
+hide empty members
+
+' --- Definición de Entidades (Tablas) ---
+
+entity "<b>Eventos</b>" as Eventos {
+  + id: INT <<PK>>
+  --
+  nombre: VARCHAR(255) <<UNIQUE>>
+}
+
+entity "<b>Categorias</b>" as Categorias {
+  + id: INT <<PK>>
+  --
+  nombre: VARCHAR(255) <<UNIQUE>>
+}
+
+entity "<b>Voluntarios</b>" as Voluntarios {
+  + id: INT <<PK>>
+  --
+  nombre: VARCHAR(255)
+  correo_electronico: VARCHAR(255) <<UNIQUE>>
+  contrasena_hash: VARCHAR(255)
+  rol: ENUM
+}
+
+entity "<b>Alumnas</b>" as Alumnas {
+  + id: VARCHAR(50) <<PK>>
+  --
+  nombre: VARCHAR(100)
+  apellido_paterno: VARCHAR(100)
+  apellido_materno: VARCHAR(100)
+  --
+  # evento_id: INT <<FK>>
+  # categoria_id: INT <<FK>>
+}
+
+entity "<b>Apoderados</b>" as Apoderados {
+  + id: INT <<PK>>
+  --
+  nombre: VARCHAR(100)
+  apellido_paterno: VARCHAR(100)
+  apellido_materno: VARCHAR(100)
+}
+
+' Tabla intermedia para la relación N:M
+entity "<b>Alumna_Apoderados</b>" as Alumna_Apoderados {
+  # alumna_id: VARCHAR(50) <<FK>>
+  # apoderado_id: INT <<FK>>
+}
+
+
+entity "<b>Registros</b>" as Registros {
+  + id: INT <<PK>>
+  --
+  tipo: ENUM('ingreso', 'egreso')
+  fecha_hora: DATETIME
+  se_retira_con_apoderado: BOOLEAN
+  comentario: TEXT
+  --
+  # alumna_id: VARCHAR(50) <<FK>>
+  # voluntario_id: INT <<FK>>
+}
+
+' --- Definición de Relaciones ---
+
+' Relaciones Uno a Muchos
+Eventos      ||--o{ Alumnas
+Categorias   ||--o{ Alumnas
+Voluntarios  ||--o{ Registros
+Alumnas      ||--o{ Registros
+
+' Relación Muchos a Muchos a través de la tabla intermedia
+Alumnas }o--|| Alumna_Apoderados
+Apoderados }o--|| Alumna_Apoderados
+
+@enduml

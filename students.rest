@@ -1,0 +1,41 @@
+### Obtener todas las alumnas
+GET http://localhost:3000/api/students
+
+### Crear una nueva alumna
+POST http://localhost:3000/api/students
+Content-Type: application/json
+
+{
+  "nombre": "Camila",
+  "rut": "12345678-9",
+  "apellido_paterno": "Soto",
+  "apellido_materno": "Muñoz",
+  "evento_id": 1,
+  "categoria_id": 1
+}
+
+### Subida masiva de alumnas
+POST http://localhost:3000/api/students/upload
+Content-Type: application/json
+
+[
+  {
+    "id": "11111111-1",
+    "nombre": "Valentina",
+    "apellido_paterno": "Rojas",
+    "apellido_materno": "López",
+    "evento_id": 1,
+    "categoria_id": 2
+  },
+  {
+    "id": "22222222-2",
+    "nombre": "Fernanda",
+    "apellido_paterno": "González",
+    "apellido_materno": "Vega",
+    "evento_id": 1,
+    "categoria_id": 3
+  }
+]
+
+### Eliminar una alumna por ID
+DELETE http://localhost:3000/api/students/1
