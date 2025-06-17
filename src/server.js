@@ -1,9 +1,8 @@
 // Carga las variables de entorno del archivo .env
-// ¡Esta debe ser la primera línea de tu aplicación!
 require('dotenv').config();
 
 const express = require('express');
-const { syncDatabase } = require('./config/database');
+const sequelize = require('./config/database'); // CAMBIO AQUÍ
 const db = require('./db/models');
 
 const app = express();
@@ -11,9 +10,9 @@ const PORT = process.env.PORT || 3000;
 
 const cors = require('cors');
 app.use(cors({
-  origin: '*', // Permite todas las solicitudes CORS
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos permitidos
-  allowedHeaders: 'Content-Type, Authorization' // Encabezados permitidos
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Content-Type, Authorization'
 }));
 
 // Middleware para parsear JSON
@@ -25,7 +24,7 @@ app.get('/', (req, res) => {
   res.send('API de Registro de Asistencia está funcionando!');
 });
 
-// --- Tus Rutas ---
+// --- Rutas ---
 const authRoutes = require('./api/auth/auth.routes');
 app.use('/api/auth', authRoutes);
 
@@ -35,17 +34,16 @@ app.use('/api/students', studentsRoutes);
 const attendanceRoutes = require('./api/attendance/attendance.routes');
 app.use('/api/attendance', attendanceRoutes);
 
-
 /**
  * Inicia el servidor luego de sincronizar la DB
  */
 const startServer = async () => {
   try {
-    await syncDatabase();
-    
-    // --- PASO 2: Añade el HOST al método listen ---
-    // Ahora el servidor aceptará conexiones desde tu IP de red (192.168.1.35)
+    // CAMBIO AQUÍ: Usamos sequelize directamente
+    await sequelize.sync({ alter: true }); // O puedes usar force: true si estás en desarrollo
+
     app.listen(PORT, () => {
+      console.log('✅ Base de datos sincronizada con éxito.');
       console.log(`✅ Servidor iniciado y escuchando en todas las interfaces de red.`);
       console.log(`   - Localmente: http://localhost:${PORT}`);
       console.log(`   - En tu red:  http://192.168.1.35:${PORT}`);
