@@ -1,13 +1,12 @@
 ########################
 # NODE / EXPRESS BACKEND
 ########################
-/node_modules/
-/logs/
-/coverage/
-/dist/
-/.env         # variables secretas
-/.DS_Store
-/npm-debug.log*
+node_modules/
+dist/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.env
 
 ########################
 # GLOBAL
