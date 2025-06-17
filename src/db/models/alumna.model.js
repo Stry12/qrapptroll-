@@ -10,12 +10,22 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       allowNull: false
     },
-    nombre: DataTypes.STRING(100),
-    apellido_paterno: DataTypes.STRING(100),
-    apellido_materno: DataTypes.STRING(100),
+    nombre: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
+    apellido_paterno: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
+    apellido_materno: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    }
   }, {
     tableName: 'alumnas',
-    timestamps: false
+    timestamps: false,
+    schema: 'public' // Optional: specify schema for PostgreSQL
   });
 
   return Alumna;

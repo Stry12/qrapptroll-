@@ -1,31 +1,29 @@
-// src/config/database.js
-
 const { Sequelize } = require('sequelize');
 const config = require('./config');
 
-const sequelize = new Sequelize(
-  config.db.database,
-  config.db.user,
-  config.db.password,
-  {
-    host: config.db.host,
-    dialect: config.db.dialect,
-    logging: false,
-  }
-);
+console.log('🔌 Conectando a PostgreSQL con:');
+console.log(config);
 
-// ✅ Agrega esta función:
+const sequelize = new Sequelize(config.DB_NAME, config.DB_USER, config.DB_PASSWORD, {
+  host: config.DB_HOST,
+  dialect: config.DB_DIALECT,
+  port: config.DB_PORT,
+  logging: false, // Opcional: apaga logs de SQL
+});
+
 const syncDatabase = async () => {
   try {
     await sequelize.authenticate();
-    console.log('✅ Conexión a la base de datos establecida correctamente.');
-    await sequelize.sync(); // crea tablas si no existen
-    console.log('📦 Tablas sincronizadas.');
+    console.log('✅ Conexión a PostgreSQL establecida correctamente.');
+    await sequelize.sync({ alter: true });
+    console.log('📦 Base de datos sincronizada.');
   } catch (error) {
-    console.error('❌ Error al conectar a MySQL:', error.message);
+    console.error('❌ Error al conectar con la base de datos:', error);
     throw error;
   }
 };
 
-module.exports = sequelize;         // para usar sequelize directamente
-module.exports.syncDatabase = syncDatabase; // para importar la función en server.js
+module.exports = {
+  sequelize,
+  syncDatabase,
+};

@@ -10,7 +10,7 @@ module.exports = {
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || '',
     database: process.env.DB_NAME || 'control_qr',
-    dialect: 'mysql',
+    dialect: process.env.DB_DIALECT || 'postgres',
     logging: false,
   },
   jwt: {

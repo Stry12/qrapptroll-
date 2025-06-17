@@ -1,7 +1,5 @@
-const { DataTypes } = require('sequelize');
-
 /**
- * @description Define el modelo de Sequelize para la tabla Apoderados.
+ * @description Define el modelo de Sequelize para la tabla Apoderados (PostgreSQL compatible).
  * @param {import('sequelize').Sequelize} sequelize La instancia de Sequelize.
  * @returns El modelo Apoderado.
  */
@@ -18,9 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     tableName: 'apoderados',
     timestamps: false
+    // schema: 'public', // Uncomment if you want to specify schema
   });
 
   return Apoderado;
 };
-
-
